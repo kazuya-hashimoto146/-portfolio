@@ -5,18 +5,18 @@ def validate(hand):
         return False
     return True
 
-def print_hand(hand, name='ゲスト'):
+def print_hand(hand, name = 'プレイヤー'):
     hands = ['グー', 'チョキ', 'パー']
-    print(name + 'は' + hands[hand] + 'を出しました！')
+    print(name + 'さんは' + hands[hand] + 'を出しました！')
 
-def judge(player, computer):
-    if player == computer:
-        return '引き分け'
-    elif player == 0 and computer == 1:
+def judge(player, cpu):
+    if player == cpu:
+        return 'あいこ'
+    elif player == 0 and cpu == 1:
         return '勝ち'
-    elif player == 1 and computer == 2:
+    elif player == 1 and cpu == 2:
         return '勝ち'
-    elif player == 2 and computer == 0:
+    elif player == 2 and cpu == 0:
         return '勝ち'
     else:
         return '負け'
