@@ -4,13 +4,13 @@ import "fmt"
 
 func main() {
 	totalScore := 0
-	title(1, "make total destroy", &totalScore)
-	title(2, "marigold", &totalScore)
-	title(3, "letter experiment", &totalScore)
-	title(4, "graveless", &totalScore)
-	title(5, "alpha", &totalScore)
-	title(6, "zero", &totalScore)
-	title(7, "blood eagle", &totalScore)
+	title(1, "楓", &totalScore)
+	title(2, "ロビンソン", &totalScore)
+	title(3, "チェリー", &totalScore)
+	title(4, "空も飛べるはず", &totalScore)
+	title(5, "春の歌", &totalScore)
+	title(6, "スターゲイザー", &totalScore)
+	title(7, "運命の人", &totalScore)
 
 	fmt.Println("スコア", totalScore)
 }
