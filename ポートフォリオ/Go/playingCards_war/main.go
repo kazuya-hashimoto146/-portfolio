@@ -23,18 +23,10 @@ func main() {
 	fmt.Scanln(&playerName)
 
 	//何ゲームやるかを指定
-	var playGameCount int
-	for true {
-		fmt.Println("ゲームのプレイ数を数値で指定してください。")
-		_, err := fmt.Scanln(&playGameCount)
-
-		if err != nil {
-			fmt.Println("正しい数値ではありません。もう一度入力してください。")
-			continue
-		}
-		break
-	}
-	fmt.Println("プレイ数：", playGameCount)
+	var gameCount int
+	fmt.Println("ゲームのプレイ数を0〜2の数値で指定してください。\n0：3ゲーム　1：5ゲーム　2：10ゲーム")
+	fmt.Scanln(&gameCount)
+	fmt.Println("プレイゲーム数：", playGameCount(gameCount))
 
 	//ゲーム開始
 	fmt.Printf("戦争ゲームへようこそ %s さん！\n", playerName)
@@ -43,7 +35,7 @@ func main() {
 	playerScore := 0
 	computerScore := 0
 
-	for i := 0; i < playGameCount; i++ {
+	for i := 0; i < playGameCount(gameCount); i++ {
 		//プレイヤーがカードを引く
 		var playerCard string
 		fmt.Println("Enterキーを押してカードを引いてください。")
@@ -67,8 +59,14 @@ func main() {
 			fmt.Printf("CPUの勝ちです。")
 			computerScore += 3
 		} else {
-			fmt.Println("引き分けです。次の戦争へ！")
-			playerScore, computerScore = playWar(deck, playerScore, computerScore, playerName)
+			fmt.Println("引き分けです。")
+
+			//新しいデッキを作成して戦争を再開する
+			var newDeck []string
+			newDeck = append(newDeck, deck[:]...)
+			playerScore, computerScore = playWar(newDeck, playerScore, computerScore, playerName)
+			playerScore += 0
+			computerScore += 0
 		}
 
 		fmt.Printf("%s：%d、CPU：%d\n", playerName, playerScore, computerScore)
@@ -81,7 +79,22 @@ func main() {
 	} else if playerScore < computerScore {
 		fmt.Println("CPUの優勝。")
 	} else {
-		fmt.Println("引き分け")
+		fmt.Println("引き分け。")
+	}
+}
+
+// 入力された数値から何ゲームプレイするかを分岐する関数
+func playGameCount(gameCount int) int {
+	switch gameCount {
+	case 0:
+		return 3
+	case 1:
+		return 5
+	case 2:
+		return 10
+	default:
+		fmt.Println("正しい数値ではありません。もう一度やり直してください。")
+		return 0
 	}
 }
 
@@ -137,32 +150,6 @@ func playWar(deck []string, playerScore int, computerScore int, playerName strin
 		var computerCard string
 		computerCard, deck = drawCard(deck)
 		computerCards = append(computerCards, computerCard)
-	}
-
-	//最後に引いたカードを比較する
-	playlerLastCard := playerCards[len(playerCards)-1]
-	computerLastCard := computerCards[len(computerCards)-1]
-
-	playerRank, _ := getRank(playlerLastCard)
-	computerRank, _ := getRank(computerLastCard)
-
-	if playerRank > computerRank {
-		fmt.Printf("%s さんの勝ちです！\n", playerName)
-		playerScore += 3
-	} else if playerRank < computerRank {
-		fmt.Println("CPUの勝ちです。")
-		computerScore += 3
-	} else {
-		fmt.Println("引き分けです。")
-
-		//新しいデッキを作成して戦争を再開する
-		var newDeck []string
-		newDeck = append(newDeck, deck[:]...)
-		var newPlayerScore, newComputerScore int
-		newPlayerScore, newComputerScore = playWar(newDeck, playerScore, computerScore, playerName)
-		playerScore += newPlayerScore
-		computerScore += newComputerScore
-
 	}
 
 	return playerScore, computerScore
