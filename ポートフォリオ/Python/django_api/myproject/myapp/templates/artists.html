@@ -1,15 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta charset="utf-8">
     <title>Artists List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
   </head>
   <body>
     <h1>Artists List</h1>
-    <ul>
-    {% for artist in object_list %}
-      <li>{{ artist.name }}</li>
-    {% endfor %}
-    </ul>
+    <p>アーティスト一覧</p>
+
+    <table>
+      <tr>
+        <th>name</th>
+        <th>discography</th>
+        <th>debut_date</th>
+        <th>agency</th>
+        <th>genre</th>
+      </tr>
+      {% for artist in artists %}
+      <tr>
+        <td>{{ artist.name }}</td>
+        <td>{{ artist.discography }}</td>
+        <td>{{ artist.debut_date }}</td>
+        <td>{{ artist.agency }}</td>
+        <td>{{ artist.genre }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    
   </body>
 </html>

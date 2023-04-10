@@ -1,0 +1,5 @@
+/* 背景色と文字色を設定 */
+body {
+    background-color: black;
+    color: white;
+  }
